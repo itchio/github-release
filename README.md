@@ -18,6 +18,11 @@ artifact. `gothub` takes care of those little details.
 It might still be a bit rough around the edges, pull requests are
 welcome!
 
+**NOTE**: I've been made aware of the existence of the
+[gothub](https://github.com/itchio/gothub) fork. Since I have very little
+time to work on the project and have been a really bad maintainer, I suggest
+checking it out to see if your issues have been solved there.
+
 How to install
 ==============
 
@@ -122,10 +127,11 @@ export GITHUB_API=http://github.company.com/api/v3
 Used libraries
 ==============
 
-| Package                                                                  | Description         | License |
-| ------------------------------------------------------------------------ | ------------------- | ------- |
-| [github.com/dustin/go-humanize](https://github.com/dustin/go-humanize)   | humanize file sizes | MIT     |
-| [github.com/voxelbrain/goptions](https://github.com/voxelbrain/goptions) | option parsing      | BSD     |
+| Package                                                                    | Description         | License |
+| ------------------------------------------------------------------------   | ------------------- | ------- |
+| [github.com/dustin/go-humanize](https://github.com/dustin/go-humanize)     | humanize file sizes | MIT     |
+| [github.com/tomnomnom/linkheader](https://github.com/tomnomnom/linkheader) | GH API pagination   | MIT     |
+| [github.com/voxelbrain/goptions](https://github.com/voxelbrain/goptions)   | option parsing      | BSD     |
 
 Copyright
 =========

@@ -5,13 +5,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/aktau/github-release/github"
 	"github.com/dustin/go-humanize"
 )
 
 const (
-	RELEASE_LIST_URI    = "/repos/%s/%s/releases%s"
+	RELEASE_LIST_URI    = "/repos/%s/%s/releases"
 	RELEASE_ASSETS_URI  = "/repos/%s/%s/releases/%d/assets%s"
-	RELEASE_LATEST_URI  = "/repos/%s/%s/releases/latest%s"
+	RELEASE_LATEST_URI  = "/repos/%s/%s/releases/latest"
 	RELEASE_DATE_FORMAT = "02/01/2006 at 15:04"
 )
 
@@ -68,11 +69,8 @@ type ReleaseCreate struct {
 }
 
 func Releases(user, repo, token string) ([]Release, error) {
-	if token != "" {
-		token = "?access_token=" + token
-	}
 	var releases []Release
-	err := GithubGetAll(fmt.Sprintf(RELEASE_LIST_URI, user, repo, token), &releases)
+	err := github.Client{Token: token, BaseURL: EnvApiEndpoint}.Get(fmt.Sprintf(RELEASE_LIST_URI, user, repo), &releases)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +85,7 @@ func ReleaseAssets(user, repo string, releaseID int, token string) ([]Asset, err
 	query := fmt.Sprintf("?per_page=100%s", token)
 
 	var assets []Asset
-	err := GithubGetAll(fmt.Sprintf(RELEASE_ASSETS_URI, user, repo, releaseID, query), &assets)
+	err := github.Client{Token: token, BaseURL: EnvApiEndpoint}.Get(fmt.Sprintf(RELEASE_ASSETS_URI, user, repo, releaseID, query), &assets)
 	if err != nil {
 		return nil, err
 	}
@@ -96,11 +94,8 @@ func ReleaseAssets(user, repo string, releaseID int, token string) ([]Asset, err
 }
 
 func latestReleaseApi(user, repo, token string) (*Release, error) {
-	if token != "" {
-		token = "?access_token=" + token
-	}
 	var release Release
-	return &release, GithubGet(fmt.Sprintf(RELEASE_LATEST_URI, user, repo, token), &release)
+	return &release, github.Client{Token: token, BaseURL: EnvApiEndpoint}.Get(fmt.Sprintf(RELEASE_LATEST_URI, user, repo), &release)
 }
 
 func LatestRelease(user, repo, token string) (*Release, error) {
