@@ -1,0 +1,22 @@
+language: go
+
+sudo: required
+services:
+- docker
+
+before_install:
+- docker pull golang:alpine
+
+install:
+- make
+
+script:
+- export DOCKER_USER=itchio
+- export REPO=$DOCKER_USER/gothub
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+- docker build -f Dockerfile -t $REPO:$COMMIT .
+- docker tag $REPO:$COMMIT $REPO:$TAG
+
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::8}
