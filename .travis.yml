@@ -7,7 +7,7 @@ before_install:
 install:
 - make
 script: |
-  export IMAGE_NAME=gableroux/gothub
+  export IMAGE_NAME=itchio/gothub
   docker build -f Dockerfile -t $IMAGE_NAME:$COMMIT .
   docker login -u $REGISTRY_USER -p $REGISTRY_PASS
   docker push "${IMAGE_NAME}:${COMMIT}"
