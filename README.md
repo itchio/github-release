@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/itchio/gothub.svg?branch=master)](https://travis-ci.org/itchio/gothub)
+
 gothub
 ======
 

@@ -1,0 +1,20 @@
+language: go
+sudo: required
+services:
+- docker
+before_install:
+- docker pull golang:alpine
+install:
+- make
+script: |
+  export IMAGE_NAME=gableroux/gothub
+  docker build -f Dockerfile -t $IMAGE_NAME:$COMMIT .
+  docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+  docker push "${IMAGE_NAME}:${COMMIT}"
+  if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:latest
+    docker push "${IMAGE_NAME}:latest"
+  fi
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::8}
